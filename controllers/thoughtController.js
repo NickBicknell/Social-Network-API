@@ -27,7 +27,13 @@ module.exports = {
   async createThought(req, res) {
     try {
       const thought = await Thought.create(req.body);
-      res.json(thought);
+
+      const user = await User.findByIdAndUpdate(
+        { _id: req.body.userId },
+        { $addToSet: { thoughts: thought._id } },
+        { new: true, runValidators: true }
+      )
+      return res.json({ thought, user });
     } catch (err) {
       return res.status(500).json(err);
     }
@@ -68,7 +74,7 @@ module.exports = {
     try {
       const thought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
-        { $addToSet: { reactions: req.params.reactionId } },
+        { $addToSet: { reactions: req.body } },
         { runValidators: true, new: true }
       );
 
