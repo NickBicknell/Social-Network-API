@@ -1,4 +1,5 @@
 const router = require("express").Router();
+// imports all thought controllers
 const {
   getThought,
   getSingleThought,

@@ -1,6 +1,7 @@
 const { User, Thought } = require("../models");
 
 module.exports = {
+  // GET all users
   async getUsers(req, res) {
     try {
       const users = await User.find();
@@ -9,6 +10,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+  // GET a single user
   async getSingleUser(req, res) {
     try {
       const user = await User.findOne({ _id: req.params.userId }).select(
@@ -24,6 +26,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+  // POST a new user
   async createUser(req, res) {
     try {
       const user = await User.create(req.body);
@@ -32,6 +35,7 @@ module.exports = {
       return res.status(500).json(err);
     }
   },
+  // PUT an update to a user
   async updateUser(req, res) {
     try {
       const user = await User.findOneAndUpdate(
@@ -49,6 +53,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+  // DELETE a user
   async deleteUser(req, res) {
     try {
       const user = await User.findOneAndDelete({ _id: req.params.userId });
@@ -63,6 +68,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+  // POST a new friend to another user
   async addFriend(req, res) {
     try {
       const user = await User.findOneAndUpdate(
@@ -82,6 +88,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+  // DELETE a user off another users friend list
   async deleteFriend(req, res) {
     try {
       const user = await User.findOneAndUpdate(
